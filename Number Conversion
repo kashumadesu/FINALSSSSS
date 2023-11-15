@@ -1,0 +1,269 @@
+#include<stdio.h>
+
+// Function to convert decimal to binary
+void decimalToBinary(int decimalNumber) {
+    long binaryNumber = 0, remainder, base = 1;
+
+    printf("Equivalent Binary Number: ");
+    while (decimalNumber > 0) {
+        remainder = decimalNumber % 2;
+        binaryNumber = binaryNumber + remainder * base;
+        decimalNumber = decimalNumber / 2;
+        base = base * 10;
+    }
+
+    printf("%ld\n", binaryNumber);
+}
+
+// Function to convert decimal to octal
+void decimalToOctal(int decimalNumber) {
+    long octalNumber = 0, remainder, base = 1;
+
+    printf("Equivalent Octal Number: ");
+    while (decimalNumber > 0) {
+        remainder = decimalNumber % 8;
+        octalNumber = octalNumber + remainder * base;
+        decimalNumber = decimalNumber / 8;
+        base = base * 10;
+    }
+
+    printf("%ld\n", octalNumber);
+}
+
+// Function to convert decimal to hexadecimal
+void decimalToHexadecimal(int decimalNumber) {
+    char hexadecimalNumber[100];
+    int i = 0;
+
+    while (decimalNumber != 0) {
+        int remainder = decimalNumber % 16;
+        if (remainder < 10) {
+            hexadecimalNumber[i] = remainder + 48;
+        } else {
+            hexadecimalNumber[i] = remainder + 55;
+        }
+        i++;
+        decimalNumber = decimalNumber / 16;
+    }
+
+    printf("Equivalent Hexa-Decimal Number: ");
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%c", hexadecimalNumber[j]);
+    }
+    printf("\n");
+}
+
+// Function to convert octal to binary
+long octalToBinary(int octalNumber) {
+    long binaryNumber = 0, base = 1, remainder;
+
+    while (octalNumber > 0) {
+        remainder = octalNumber % 10;
+        binaryNumber = binaryNumber + remainder * base;
+        octalNumber = octalNumber / 10;
+        base = base * 1000;
+    }
+
+    return binaryNumber;
+}
+
+// Function to convert octal to decimal
+int octalToDecimal(int octalNumber) {
+    int decimalNumber = 0, base = 1, remainder;
+
+    while (octalNumber > 0) {
+        remainder = octalNumber % 10;
+        decimalNumber = decimalNumber + remainder * base;
+        octalNumber = octalNumber / 10;
+        base = base * 8;
+    }
+
+    return decimalNumber;
+}
+
+// Function to convert octal to hexadecimal
+void octalToHexadecimal(int octalNumber) {
+    int decimalNumber = octalToDecimal(octalNumber);
+    decimalToHexadecimal(decimalNumber);
+}
+
+// Function to convert hexadecimal to binary
+long hexadecimalToBinary(char hexaDecimalNumber[]) {
+    long binaryNumber = 0;
+    int i = 0;
+
+    while (hexaDecimalNumber[i] != '\0') {
+        int digit;
+
+        if (hexaDecimalNumber[i] >= '0' && hexaDecimalNumber[i] <= '9') {
+            digit = hexaDecimalNumber[i] - '0';
+        } else if (hexaDecimalNumber[i] >= 'A' && hexaDecimalNumber[i] <= 'F') {
+            digit = hexaDecimalNumber[i] - 'A' + 10;
+        } else if (hexaDecimalNumber[i] >= 'a' && hexaDecimalNumber[i] <= 'f') {
+            digit = hexaDecimalNumber[i] - 'a' + 10;
+        } else {
+            printf("Invalid Hexa-Decimal Number\n");
+            return -1;
+        }
+
+        binaryNumber = binaryNumber * 16 + digit;
+        i++;
+    }
+
+    return binaryNumber;
+}
+
+// Function to convert hexadecimal to decimal
+int hexadecimalToDecimal(char hexaDecimalNumber[]) {
+    int decimalNumber = 0, base = 1, i = 0;
+
+    while (hexaDecimalNumber[i] != '\0') {
+        int digit;
+
+        if (hexaDecimalNumber[i] >= '0' && hexaDecimalNumber[i] <= '9') {
+            digit = hexaDecimalNumber[i] - '0';
+        } else if (hexaDecimalNumber[i] >= 'A' && hexaDecimalNumber[i] <= 'F') {
+            digit = hexaDecimalNumber[i] - 'A' + 10;
+        } else if (hexaDecimalNumber[i] >= 'a' && hexaDecimalNumber[i] <= 'f') {
+            digit = hexaDecimalNumber[i] - 'a' + 10;
+        } else {
+            printf("Invalid Hexa-Decimal Number\n");
+            return -1;
+        }
+
+        decimalNumber = decimalNumber * 16 + digit;
+        i++;
+    }
+
+    return decimalNumber;
+}
+
+// Function to convert hexadecimal to octal
+void hexadecimalToOctal(char hexaDecimalNumber[]) {
+    int decimalNumber = hexadecimalToDecimal(hexaDecimalNumber);
+    decimalToOctal(decimalNumber);
+}
+
+int main() {
+    int choice;
+    int decimalNumber;
+    char hexaDecimalNumber[100];
+    int octalNumber;
+    long result;
+    int continueChoice;
+
+    do {
+        // Display menu
+        printf("=> NUMBER CONVERSION MENU <=\n\n");
+        
+        printf("\n=> DECIMAL <=\n");
+        
+        printf("4: Decimal to Binary.\n");
+        printf("5: Decimal to Octal.\n");
+        printf("6: Decimal to Hexa-Decimal.\n");
+        
+        printf("\n=> OCTAL <=\n");
+        
+        printf("7: Octal to Binary.\n");
+        printf("8: Octal to Decimal.\n");
+        printf("9: Octal to Hexa-Decimal.\n");
+        
+        printf("\n=> HEXA-DECIMAL <=\n");
+        
+        printf("10: Hexa-Decimal to Binary.\n");
+        printf("11: Hexa-Decimal to Decimal.\n");
+        printf("12: Hexa-Decimal to Octal.\n\n");
+
+        // Get user choice
+        printf("ENTER YOUR CHOICE(4-12): ");
+        scanf("%d", &choice);
+
+        // Process user choice
+        switch (choice) {
+            case 4:
+                // Decimal to Binary
+                printf("\n*** DECIMAL TO BINARY ***\n");
+                printf("Enter the Number in Decimal form: ");
+                scanf("%d", &decimalNumber);
+                decimalToBinary(decimalNumber);
+                break;
+
+            case 5:
+                // Decimal to Octal
+                printf("\n*** DECIMAL TO OCTAL ***\n");
+                printf("Enter the Number in Decimal form: ");
+                scanf("%d", &decimalNumber);
+                decimalToOctal(decimalNumber);
+                break;
+
+            case 6:
+                // Decimal to Hexa-Decimal
+                printf("\n*** DECIMAL TO HEXA-DECIMAL ***\n");
+                printf("Enter the Number in Decimal form: ");
+                scanf("%d", &decimalNumber);
+                decimalToHexadecimal(decimalNumber);
+                break;
+
+            case 7:
+                // Octal to Binary
+                printf("\n*** OCTAL TO BINARY ***\n");
+                printf("Enter the Number in Octal form: ");
+                scanf("%o", &octalNumber);
+                result = octalToBinary(octalNumber);
+                printf("Equivalent Binary Number: %ld\n", result);
+                break;
+
+            case 8:
+                // Octal to Decimal
+                printf("\n*** OCTAL TO DECIMAL ***\n");
+                printf("Enter the Number in Octal form: ");
+                scanf("%o", &octalNumber);
+                printf("Equivalent Decimal Number: %d\n", octalToDecimal(octalNumber));
+                break;
+
+            case 9:
+                // Octal to Hexa-Decimal
+                printf("\n*** OCTAL TO HEXA-DECIMAL ***\n");
+                printf("Enter the Number in Octal form: ");
+                scanf("%o", &octalNumber);
+                octalToHexadecimal(octalNumber);
+                break;
+
+            case 10:
+                // Hexa-Decimal to Binary
+                printf("\n*** HEXA-DECIMAL TO BINARY ***\n");
+                printf("Enter the Number in Hexa-Decimal form: ");
+                scanf("%s", hexaDecimalNumber);
+                result = hexadecimalToBinary(hexaDecimalNumber);
+                if(result != -1)
+                    printf("Equivalent Binary Number: %ld\n", result);
+                break;
+
+            case 11:
+                // Hexa-Decimal to Decimal
+                printf("\n*** HEXA-DECIMAL TO DECIMAL ***\n");
+                printf("Enter the Number in Hexa-Decimal form: ");
+                scanf("%s", hexaDecimalNumber);
+                printf("Equivalent Decimal Number: %d\n", hexadecimalToDecimal(hexaDecimalNumber));
+                break;
+
+            case 12:
+                // Hexa-Decimal to Octal 
+                printf("\n*** HEXA-DECIMAL TO OCTAL ***\n");
+                printf("Enter the Number in Hexa-Decimal form: ");
+                scanf("%s", hexaDecimalNumber);
+                hexadecimalToOctal(hexaDecimalNumber);
+                break;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+
+        // This statement will ask the user if they want to continue - MB
+        printf("\nDO YOU WANT TO CONTINUE? (1/0): ");
+        scanf("%d", &continueChoice);
+
+    } while (continueChoice == 1);
+
+    printf("Program terminated.\n");
+}
